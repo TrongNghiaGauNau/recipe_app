@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../model/meal.dart';
+import 'package:recipe_food_app/model/meal_detail.dart';
+import 'package:recipe_food_app/screens/meal_detail/meal_detail.dart';
 
 class AllMealBaseOnCategory extends StatelessWidget {
   const AllMealBaseOnCategory({
@@ -8,7 +8,7 @@ class AllMealBaseOnCategory extends StatelessWidget {
     required this.listMeals,
   });
 
-  final List<Meal> listMeals;
+  final List<Meals> listMeals;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +19,7 @@ class AllMealBaseOnCategory extends StatelessWidget {
         itemCount: listMeals.length,
         itemBuilder: (context, index) {
           return PopularOfferCard(
-            mealTitle: listMeals[index].title,
-            image: listMeals[index].mealThumb,
-            press: () {},
+            meal: listMeals[index],
           );
         },
       ),
@@ -29,111 +27,115 @@ class AllMealBaseOnCategory extends StatelessWidget {
   }
 }
 
-
-
 class PopularOfferCard extends StatelessWidget {
   const PopularOfferCard({
     super.key,
-    required this.mealTitle,
-    required this.image,
-    required this.press,
+    required this.meal,
   });
 
-  final String mealTitle, image;
-  final GestureTapCallback press;
+  final Meals meal;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: Column(
-        children: [
-          SizedBox(
-            width: 200,
-            height: 300,
-            child: Stack(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 75),
-                  height: 225,
-                  decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 70,left: 5,right: 5),
-                        child: Text(
-                          mealTitle,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => MealDetail(meal: meal),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              width: 200,
+              height: 300,
+              child: Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 75),
+                    height: 225,
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: 70, left: 5, right: 5),
+                          child: Text(
+                            meal.strMeal,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20, left: 10, right: 10, bottom: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Row(
-                              children: [
-                                Text(
-                                  'Time',
-                                  style: TextStyle(color: Colors.black38),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  '10 mins',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(50),
+                        const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 10, right: 10, bottom: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Row(
+                                children: [
+                                  Text(
+                                    'Time',
+                                    style: TextStyle(color: Colors.black38),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: Icon(Icons.favorite_border_rounded),
+                                  Spacer(),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    '10 mins',
+                                    style: TextStyle(color: Colors.black),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  const Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child:
+                                          Icon(Icons.favorite_border_rounded),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 25,
-                  child: SizedBox(
-                    height: 150,
-                    width: 150,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.network(image),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    left: 25,
+                    child: SizedBox(
+                      height: 150,
+                      width: 150,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(meal.strMealThumb),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

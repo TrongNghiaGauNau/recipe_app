@@ -46,16 +46,25 @@ class MealRepository {
   }
 
   //get list of meal base on category
-  Future<List<Meal>> getMealOnCategory(String mealName) async {
+  Future<List<Meals>> getMealOnCategory(String mealName) async {
     final url = '$apiMainLink/filter.php?c=$mealName';
     try {
       final response = await dio.get(url);
 
       if (response.statusCode == 200) {
         final data = response.data;
-        final mealList = (data["meals"] as List).map((mealMap) {
-          return Meal.fromMap(mealMap);
+        final idMealList = data["meals"].map((meal) {
+          return meal['idMeal'];
         }).toList();
+        final List<Meals> mealList = [];
+        for(String idMeal in idMealList){
+          try {
+            final meal = await getMealDetail(idMeal);
+            mealList.add(meal);
+          } catch (e) {
+            print('Error fetching meal details for idMeal: $idMeal - $e');
+          }
+        }
         return mealList;
       } else {
         throw Exception('Failed to get all meals base on categories');

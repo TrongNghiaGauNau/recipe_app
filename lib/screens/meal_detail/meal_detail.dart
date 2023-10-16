@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:recipe_food_app/providers/favorite/favorite_provider.dart';
+import 'package:recipe_food_app/providers/favorite/favorite_state.dart';
 import 'package:recipe_food_app/screens/meal_detail/components/body_meal_detail.dart';
 import 'package:recipe_food_app/model/meal_detail.dart';
 
-class MealDetail extends StatelessWidget {
+class MealDetail extends ConsumerWidget {
   const MealDetail({super.key, required this.meal});
 
   final Meals meal;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final List<String> ingredientsList = [
       meal.strIngredient1,
       meal.strIngredient2,
@@ -31,8 +34,39 @@ class MealDetail extends StatelessWidget {
       meal.strIngredient19,
       meal.strIngredient20,
     ];
+    final isFavorite =
+        ref.watch(favoriteStateProvider).favoriteProducts.contains(meal);
+
+    // xử lý khi add hoac remove favorite
+    ref.listen<FavoriteState>(favoriteStateProvider, (FavoriteState? previous, FavoriteState next) {
+      if (previous?.favoriteProducts != next.favoriteProducts) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Favorite list has updated'),
+          ),
+        );
+      }
+    });
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              if(!isFavorite){
+                ref.read(favoriteStateProvider.notifier).addToFavorite(meal);
+              }
+              else{
+                ref.read(favoriteStateProvider.notifier).removeFromFavorite(meal);
+              }
+            },
+            icon:
+            isFavorite
+                ? const Icon(Icons.favorite,color: Colors.red,)
+                : const Icon(Icons.favorite_outline),
+          ),
+        ],
+      ),
       body: BodyMealDetail(meals: meal, ingredientsList: ingredientsList),
     );
   }
