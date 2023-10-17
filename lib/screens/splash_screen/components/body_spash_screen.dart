@@ -22,7 +22,7 @@ class BodySplashScreen extends StatelessWidget {
           const Spacer(),
           Container(
             height: 50,
-            width: 250,
+            width: 220,
             decoration: BoxDecoration(
               color: Colors.black38,
               borderRadius: BorderRadius.circular(30),
@@ -39,7 +39,7 @@ class BodySplashScreen extends StatelessWidget {
                   Text(
                     '60k+ Premium recipes',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

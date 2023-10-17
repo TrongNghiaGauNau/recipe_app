@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:recipe_food_app/providers/favorite/favorite_provider.dart';
-import 'package:recipe_food_app/providers/favorite/favorite_state.dart';
 import 'package:recipe_food_app/screens/save/components/favorite_card.dart';
 import '../../components/header.dart';
 
@@ -10,6 +9,7 @@ class SaveScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final size = MediaQuery.of(context).size;
     final listFavorite = ref.watch(favoriteStateProvider).favoriteProducts;
 
@@ -41,16 +41,15 @@ class SaveScreen extends ConsumerWidget {
                   const SizedBox(height: 20),
                   const Header(textHeader: 'Saved recipes'),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    height: size.height,
-                    child: ListView.builder(
-                      itemCount: listFavorite.length,
-                      itemBuilder: (context, index) {
-                        return FavoriteCard(
-                          meal: listFavorite[index],
-                        );
-                      },
-                    ),
+                  ListView.builder(
+                    shrinkWrap: true, // Set shrinkWrap to true
+                    physics: const NeverScrollableScrollPhysics(), // Disable scrolling
+                    itemCount: listFavorite.length,
+                    itemBuilder: (context, index) {
+                      return FavoriteCard(
+                        meal: listFavorite[index],
+                      );
+                    },
                   ),
                 ],
               ),

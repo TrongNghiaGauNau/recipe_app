@@ -15,8 +15,8 @@ class BodyMealDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> ingredients = [];
-    for(String ingredient in ingredientsList){
-      if(ingredient != ''){
+    for (String ingredient in ingredientsList) {
+      if (ingredient != '') {
         ingredients.add(ingredient);
       }
     }
@@ -89,6 +89,7 @@ class BodyMealDetail extends StatelessWidget {
               itemCount: ingredients.length,
               shrinkWrap: true,
               // Ensure the ListView takes only the space it needs
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 // Create a widget for each item in the list
                 return Padding(

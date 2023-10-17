@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Meals _$MealsFromJson(Map<String, dynamic> json) {
+Meals _$MealsFromJson(Map<dynamic, dynamic> json) {
   return _Meals.fromJson(json);
 }
 
@@ -827,7 +827,7 @@ class _$MealsImpl implements _Meals {
       required this.strCreativeCommonsConfirmed,
       required this.dateModified});
 
-  factory _$MealsImpl.fromJson(Map<String, dynamic> json) =>
+  factory _$MealsImpl.fromJson(Map<dynamic, dynamic> json) =>
       _$$MealsImplFromJson(json);
 
   @override
@@ -1173,7 +1173,7 @@ abstract class _Meals implements Meals {
       required final dynamic strCreativeCommonsConfirmed,
       required final dynamic dateModified}) = _$MealsImpl;
 
-  factory _Meals.fromJson(Map<String, dynamic> json) = _$MealsImpl.fromJson;
+  factory _Meals.fromJson(Map<dynamic, dynamic> json) = _$MealsImpl.fromJson;
 
   @override
   String get idMeal;

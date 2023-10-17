@@ -57,7 +57,7 @@ class MealRepository {
           return meal['idMeal'];
         }).toList();
         final List<Meals> mealList = [];
-        for(String idMeal in idMealList){
+        for (String idMeal in idMealList) {
           try {
             final meal = await getMealDetail(idMeal);
             mealList.add(meal);
@@ -86,12 +86,36 @@ class MealRepository {
         final meal = mealsList[0];
         final mealDetail = Meals.fromJson(meal);
         return mealDetail;
-
       } else {
         throw Exception('Failed to get all meals base on categories');
       }
     } catch (e) {
       throw Exception('Failed to get all meals base on  categories: $e');
+    }
+  }
+
+  //search for meal
+  Future<List<Meals>> searchMeal(String input) async {
+    final url = '$apiMainLink/search.php?f=$input';
+    try {
+      final response = await dio.get(url);
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        final List<dynamic> mealsData = data['meals'];
+        // Create a List<Meal> by mapping the JSON data to Meal objects
+        final List<Meals> mealsList = mealsData.map((meal) {
+          return Meals.fromJson(meal);
+        }).toList();
+
+        // Now you have a List<Meal> containing the meal data
+        print('mealsList: $mealsList');
+        return mealsList;
+      } else {
+        throw Exception('Failed to get all meals base base on searching');
+      }
+    } catch (e) {
+      throw Exception('Failed to get all meals base base on searching: $e');
     }
   }
 }

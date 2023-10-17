@@ -6,7 +6,7 @@ part of 'meal_detail.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MealsImpl _$$MealsImplFromJson(Map<String, dynamic> json) => _$MealsImpl(
+_$MealsImpl _$$MealsImplFromJson(Map<dynamic, dynamic> json) => _$MealsImpl(
       idMeal: json['idMeal'] as String,
       strMeal: json['strMeal'] as String,
       strDrinkAlternate: json['strDrinkAlternate'],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_food_app/model/meal_detail.dart';
+import 'package:recipe_food_app/providers/favorite/favorite_provider.dart';
 import 'package:recipe_food_app/screens/meal_detail/meal_detail.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AllMealBaseOnCategory extends StatelessWidget {
   const AllMealBaseOnCategory({
@@ -106,10 +108,23 @@ class PopularOfferCard extends StatelessWidget {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(5),
-                                      child:
-                                          Icon(Icons.favorite_border_rounded),
+                                    child: Consumer(
+                                      builder: (context, ref, child) {
+                                        final isFav = ref
+                                            .watch(favoriteStateProvider)
+                                            .favoriteProducts
+                                            .contains(meal);
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: isFav
+                                              ? const Icon(
+                                                  Icons.favorite,
+                                                  color: Colors.red,
+                                                )
+                                              : const Icon(Icons
+                                                  .favorite_border_rounded),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ],

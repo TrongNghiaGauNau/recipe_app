@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:recipe_food_app/model/meal_detail.dart';
+import 'package:recipe_food_app/providers/favorite/favorite_provider.dart';
 import 'package:recipe_food_app/providers/get_meal_detail_provider.dart';
 import 'package:recipe_food_app/providers/get_random_meal_provider.dart';
 import 'package:recipe_food_app/screens/home/components/section_title.dart';
@@ -13,7 +14,6 @@ class TrendingNow extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final randomMeal = ref.watch(randomMealProvider);
-    // var getRandomMealInfo = useState(false);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -29,15 +29,6 @@ class TrendingNow extends HookConsumerWidget {
           width: double.infinity,
           child: randomMeal.when(
             data: (meal) {
-              // final getMealDetail = ref.read(geMealDetailProvider(meal.idMeal));
-              // getMealDetail.when(
-              //   data: (meal) {
-              //     getRandomMealInfo.value = true;
-              //   },
-              //   error: (error, stackTrace) => getRandomMealInfo.value = false,
-              //   loading: () {},
-              // );
-
               return SpecialOfferCard(
                 meal: meal,
               );

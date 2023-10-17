@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:recipe_food_app/providers/favorite/favorite_provider.dart';
 import 'package:recipe_food_app/providers/get_random_meal_provider.dart';
 import 'package:recipe_food_app/providers/navigation_bar_provider.dart';
 import 'package:recipe_food_app/screens/home/home_screen.dart';

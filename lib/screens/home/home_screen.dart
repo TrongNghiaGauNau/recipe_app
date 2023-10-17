@@ -10,19 +10,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const SafeArea(
+    return const SafeArea(
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height:20),
+            SizedBox(height: 20),
             Header(textHeader: 'Find best recipes \nfor cooking'),
-            SizedBox(height:20),
+            SizedBox(height: 20),
             SearchField(),
-            SizedBox(height:20),
+            SizedBox(height: 20),
             TrendingNow(),
-            SizedBox(height:20),
+            SizedBox(height: 20),
             PopularCategory(),
-            SizedBox(height:20),
+            SizedBox(height: 20),
             RecentRecipes(),
             // SizedBox(height:20),
           ],

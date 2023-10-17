@@ -62,5 +62,5 @@ class Meals with _$Meals {
     required dynamic dateModified,
   }) = _Meals;
 
-  factory Meals.fromJson(Map<String, Object?> json) => _$MealsFromJson(json);
+  factory Meals.fromJson(Map<dynamic, dynamic> json) => _$MealsFromJson(json);
 }

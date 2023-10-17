@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_food_app/screens/search/search_view.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});
@@ -17,9 +18,11 @@ class SearchField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: TextField(
-            onChanged: (value) {
-              //search value
-            },
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const SearchView(),
+              ),
+            ),
             style: const TextStyle(fontSize: 20),
             decoration: const InputDecoration(
               enabledBorder: InputBorder.none,
