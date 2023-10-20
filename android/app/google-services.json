@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "582057991572",
+    "project_id": "insta-clone-riverpod-learning",
+    "storage_bucket": "insta-clone-riverpod-learning.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582057991572:android:10afef888fd78978d60381",
+        "android_client_info": {
+          "package_name": "com.example.recipe_food_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582057991572-0duhcmjjic3mj2spf1r0faiuvfv3bnh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.recipe_food_app",
+            "certificate_hash": "7b76cc4b386390c8721b9326dbbde004dd909607"
+          }
+        },
+        {
+          "client_id": "582057991572-3nmb5l4iut32f734k72p4obfvs8lgr4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmJ1LbxL1OMeNNL-i7Du-X2joN-DTD6jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582057991572-3nmb5l4iut32f734k72p4obfvs8lgr4g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582057991572-56hnudusrgs4604mlbhe7s5tvgaj9ecu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.recipeFoodApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

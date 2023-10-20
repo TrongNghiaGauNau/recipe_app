@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:recipe_food_app/providers/favorite/favorite_provider.dart';
 import 'package:recipe_food_app/providers/favorite/favorite_state.dart';
 import 'package:recipe_food_app/screens/meal_detail/components/body_meal_detail.dart';
 import 'package:recipe_food_app/model/meal_detail.dart';
 
-class MealDetail extends HookConsumerWidget {
+class MealDetail extends ConsumerWidget {
   const MealDetail({super.key, required this.meal});
 
   final Meals meal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<String> ingredientsList = [
+    final List<String?> ingredientsList = [
       meal.strIngredient1,
       meal.strIngredient2,
       meal.strIngredient3,

@@ -10,12 +10,12 @@ class BodyMealDetail extends StatelessWidget {
   });
 
   final Meals meals;
-  final List<String> ingredientsList;
+  final List<String?> ingredientsList;
 
   @override
   Widget build(BuildContext context) {
-    final List<String> ingredients = [];
-    for (String ingredient in ingredientsList) {
+    final List<String?> ingredients = [];
+    for (String? ingredient in ingredientsList) {
       if (ingredient != '') {
         ingredients.add(ingredient);
       }
@@ -104,7 +104,7 @@ class BodyMealDetail extends StatelessWidget {
                         horizontal: 15,
                       ),
                       child: Text(
-                        ingredients[index],
+                        ingredients[index]!,
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -138,7 +138,7 @@ class BodyMealDetail extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(meals.strInstructions),
+                child: Text(meals.strInstructions!),
               ),
             ),
           ],
