@@ -15,15 +15,18 @@ class BodyProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listRecipes = ref.watch(recipeRetrieveProvider).listMeals;
+    final listAllRecipes = ref.watch(recipeRetrieveProvider).listMeals;
     final isVideoTab = ref.watch(videoOrRecipeTabProvider);
-    final List<Meal?> listVidOrRe = isVideoTab
-        ? listRecipes
-            .map((recipe) => recipe[MealKey.fileType] == FileType.video)
-            .toList()
-        : listRecipes
-            .map((recipe) => recipe[MealKey.fileType] == FileType.video)
-            .toList();
+
+    List<Meal?> listVideos = listAllRecipes.where((meal) {
+      return meal != null && meal[MealKey.fileType] == 'video';
+    }).toList();
+    final listRecipes = listAllRecipes
+        .where((meal) => meal?[MealKey.fileType].toString() == 'image')
+        .toList();
+
+    //sao cái này trả về list<bool>
+    // final test = listRecipes.map((recipe) => recipe?[MealKey.fileType] == FileType.video).toList();
 
     return SingleChildScrollView(
       child: Column(
@@ -58,10 +61,12 @@ class BodyProfileScreen extends ConsumerWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: listMeal.length,
+            itemCount: isVideoTab ? listVideos.length : listRecipes.length,
+            // itemCount: listAllRecipes.length,
             itemBuilder: (context, index) {
               return VideoOrRecipeCard(
-                meal: listMeal[index],
+                meal: isVideoTab ? listVideos[index] : listRecipes[index],
+                // meal: listAllRecipes[index],
               );
             },
           ),

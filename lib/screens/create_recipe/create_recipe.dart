@@ -7,6 +7,7 @@ import 'package:recipe_food_app/components/header.dart';
 import 'package:recipe_food_app/constants/file_type.dart';
 import 'package:recipe_food_app/constants/firebase_filed_name.dart';
 import 'package:recipe_food_app/extension/pick_image_or_video/pick_image_or_video.dart';
+import 'package:recipe_food_app/providers/get_recipe/get_recipe_provider.dart';
 import 'package:recipe_food_app/providers/get_user_id_provider.dart';
 import 'package:recipe_food_app/providers/loading_provider.dart';
 import 'package:recipe_food_app/providers/upload_new_recipe/recipe_upload_provider.dart';
@@ -29,6 +30,8 @@ class _CreateRecipeState extends ConsumerState<CreateRecipe> {
   Widget build(BuildContext context) {
     //biến quản lý size màn hình
     final size = MediaQuery.of(context).size;
+    //quản lý loading state
+    final isLoading = ref.watch(isLoadingProvider);
     //biến quản lý form text field
     final formKey = useMemoized(() => GlobalKey<FormState>());
     //biến để upload meal lên firebase
@@ -42,26 +45,34 @@ class _CreateRecipeState extends ConsumerState<CreateRecipe> {
     final ingredients = useValueNotifier<List<TextEditingController>>(
         [TextEditingController()]);
     //xu ly hien thi dialog loading
-    ref.listen(isLoadingProvider, (previous, isLoading) {
-      if (isLoading) {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return const AlertDialog(
-              title: Text('Uploading Recipe'),
-              content: Text(
-                'Please wait a moment\nUploading....',
-                textAlign: TextAlign.center,
-              ),
-            );
-          },
-        );
-      }
-    });
+    // ref.listen(isLoadingProvider, (previous, isLoading) {
+    //   if (isLoading) {
+    //     showDialog(
+    //       context: context,
+    //       builder: (_) {
+    //         return const AlertDialog(
+    //           title: Text('Uploading Recipe'),
+    //           content: Text(
+    //             'Please wait a moment\nUploading....',
+    //             textAlign: TextAlign.center,
+    //           ),
+    //         );
+    //       },
+    //     );
+    //   }
+    // });
 
     //hàm xử lý upload dữ liệu lên firebase
     saveMeal() async {
       if (!formKey.currentState!.validate()) {
+        return;
+      }
+      if(fileToPost.value == null){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Pick some image of video first'),
+          ),
+        );
         return;
       }
       final userId = ref.read(userIdProvider);
@@ -81,6 +92,11 @@ class _CreateRecipeState extends ConsumerState<CreateRecipe> {
                 .toList(),
           );
       if (isUploaded && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Create Recipe Successfully'),
+          ),
+        );
         Navigator.of(context).pop();
       }
     }
@@ -145,58 +161,68 @@ class _CreateRecipeState extends ConsumerState<CreateRecipe> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              const Header(textHeader: 'Create Recipe'),
-              PickImageOrVideoCard(
-                imageToPost: fileToPost.value,
-                videoToPost: videoThumb.value,
+      body: isLoading
+          ? const Center(
+              child: Column(
+                children: [
+                  Text('Please wait a moment...'),
+                  SizedBox(height: 10,),
+                  CircularProgressIndicator(),
+                ],
               ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+            )
+          : SingleChildScrollView(
+              child: Form(
+                key: formKey,
                 child: Column(
                   children: [
-                    TextFieldRecipe(
-                      controller: mealName,
-                      hintText: 'Meal name',
-                      icon: const Icon(
-                        Icons.drive_file_rename_outline,
-                      ),
+                    const Header(textHeader: 'Create Recipe'),
+                    PickImageOrVideoCard(
+                      imageToPost: fileToPost.value,
+                      videoToPost: videoThumb.value,
                     ),
                     const SizedBox(height: 10),
-                    TextFieldRecipe(
-                      controller: category,
-                      hintText: 'Category',
-                      icon: const Icon(
-                        Icons.category_outlined,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: [
+                          TextFieldRecipe(
+                            controller: mealName,
+                            hintText: 'Meal name',
+                            icon: const Icon(
+                              Icons.drive_file_rename_outline,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          TextFieldRecipe(
+                            controller: category,
+                            hintText: 'Category',
+                            icon: const Icon(
+                              Icons.category_outlined,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          TextFieldRecipe(
+                            controller: area,
+                            hintText: 'Area',
+                            icon: const Icon(
+                              Icons.location_on,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const IngredientsTitle(),
+                          const SizedBox(height: 10),
+                          IngredientsList(
+                            size: size,
+                            ingredientsList: ingredients,
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextFieldRecipe(
-                      controller: area,
-                      hintText: 'Area',
-                      icon: const Icon(
-                        Icons.location_on,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const IngredientsTitle(),
-                    const SizedBox(height: 10),
-                    IngredientsList(
-                      size: size,
-                      ingredientsList: ingredients,
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
       bottomNavigationBar: BottomAppBarSaveMeal(size: size, saveMeal: saveMeal),
     );
   }

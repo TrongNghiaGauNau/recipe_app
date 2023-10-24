@@ -22,6 +22,5 @@ class RecipeRetrieveNotifier extends StateNotifier<RecipeState> {
     if (listMeals.isNotEmpty) {
       state = state.copyWith(listMeals: listMeals);
     }
-    print('ID NGƯƠI DUNG Ơ DAY NE:$userId');
   }
 }

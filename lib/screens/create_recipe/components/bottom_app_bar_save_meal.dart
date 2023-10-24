@@ -13,6 +13,7 @@ class BottomAppBarSaveMeal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      shadowColor: Colors.yellow,
       height: size.height * 0.13,
       child: GestureDetector(
         onTap: saveMeal,
